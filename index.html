@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doridul Christmas Party</title>
+    <!-- 클래식 폰트 불러오기 (Great Vibes, Playfair Display, Gowun Batang) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FDFBF7;
+            --red-color: #C83835;
+            --red-light: #F9EBEA;
+            --border-color: #C83835;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--red-color);
+            font-family: 'Gowun Batang', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            /* 종이 질감 패턴 느낌 추가 */
+            background-image: radial-gradient(#E8E2D5 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
+        }
+
+        .card {
+            border: 2px solid var(--border-color);
+            outline: 1px solid var(--border-color);
+            outline-offset: -6px;
+            padding: 40px 30px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(200, 56, 53, 0.08);
+            position: relative;
+            background-color: var(--bg-color);
+        }
+
+        /* 크리스마스 라인 아트 장식 효과 */
+        .corner-decoration {
+            position: absolute;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        .top-left { top: 12px; left: 12px; }
+        .top-right { top: 12px; right: 12px; }
+        .bottom-left { bottom: 12px; left: 12px; }
+        .bottom-right { bottom: 12px; right: 12px; }
+
+        h1.script-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.2rem;
+            font-weight: normal;
+            line-height: 1.1;
+            margin-bottom: 5px;
+        }
+
+        h2.classic-title {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        p.description {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            word-break: keep-all;
+        }
+
+        .members-list {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .member-badge {
+            border: 1px solid var(--red-color);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .member-badge.selected {
+            background-color: var(--red-color);
+            color: var(--bg-color);
+            font-weight: bold;
+        }
+
+        .result-box {
+            border-top: 1px dashed var(--red-color);
+            border-bottom: 1px dashed var(--red-color);
+            padding: 20px 0;
+            margin: 20px 0 30px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .highlight-name {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-top: 8px;
+            font-family: 'Gowun Batang', serif;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .loading-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--red-color);
+            font-family: 'Gowun Batang', serif;
+            animation: pulse 0.3s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(0.95); opacity: 0.8; }
+            to { transform: scale(1.05); opacity: 1; }
+        }
+
+        .btn {
+            background-color: transparent;
+            color: var(--red-color);
+            border: 1.5px solid var(--red-color);
+            padding: 12px 36px;
+            font-size: 1.1rem;
+            font-family: 'Playfair Display', 'Gowun Batang', serif;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .btn:hover:not(:disabled) {
+            background-color: var(--red-color);
+            color: var(--bg-color);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #ccc;
+            color: #888;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .chain-history {
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            background-color: rgba(200, 56, 53, 0.03);
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 2px solid var(--red-color);
+        }
+
+        .chain-item {
+            margin-bottom: 4px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="corner-decoration top-left">✦</div>
+    <div class="corner-decoration top-right">✦</div>
+    <div class="corner-decoration bottom-left">✦</div>
+    <div class="corner-decoration bottom-right">✦</div>
+
+    <!-- 1. 메인 화면 -->
+    <div id="step-1">
+        <h1 class="script-title">Doridul</h1>
+        <h2 class="classic-title">Christmas Party</h2>
+        <p class="description">
+            선물 뽑기를 시작합니다.<br>
+            서로의 산타가 되어줄 순서를 정해볼까요?
+        </p>
+        <button class="btn" onclick="nextStep(2)">START</button>
+    </div>
+
+    <!-- 2~7. 진행 화면 (공통 레이아웃 사용) -->
+    <div id="step-game" class="hidden">
+        <h2 class="classic-title" id="game-title">Christmas Party</h2>
+        
+        <p class="description" id="game-desc"></p>
+
+        <div class="members-list" id="members-container"></div>
+
+        <div class="result-box">
+            <span id="result-label" style="font-size: 0.95rem;">버튼을 눌러 사람을 뽑아주세요</span>
+            <div id="result-name" class="highlight-name"></div>
+        </div>
+
+        <div id="chain-history" class="chain-history hidden"></div>
+
+        <button class="btn" id="action-btn" onclick="drawFirstWithLoading()">첫번째 사람 뽑기</button>
+    </div>
+
+</div>
+
+<script>
+    const INITIAL_MEMBERS = ["수민", "보은", "인수", "율린", "홍비", "도희"];
+    const LOADING_MESSAGES = ["두근두근 💓", "두구두구두구 🥁", "메리크리스마스! 🎄"];
+    
+    let remainingMembers = [];
+    let sequence = [];
+    let currentStep = 1;
+
+    function initGame() {
+        remainingMembers = [...INITIAL_MEMBERS];
+        sequence = [];
+        currentStep = 1;
+        
+        document.getElementById('step-1').classList.remove('hidden');
+        document.getElementById('step-game').classList.add('hidden');
+        document.getElementById('chain-history').classList.add('hidden');
+        document.getElementById('chain-history').innerHTML = '';
+    }
+
+    function nextStep(step) {
+        if(step === 2) {
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-game').classList.remove('hidden');
+            setupStep2();
+        }
+    }
+
+    function renderMembers() {
+        const container = document.getElementById('members-container');
+        container.innerHTML = '';
+        INITIAL_MEMBERS.forEach(member => {
+            const badge = document.createElement('span');
+            badge.className = 'member-badge';
+            if (sequence.includes(member)) {
+                badge.classList.add('selected');
+            }
+            badge.textContent = member;
+            container.appendChild(badge);
+        });
+    }
+
+    function setupStep2() {
+        currentStep = 2;
+        renderMembers();
+        document.getElementById('game-title').textContent = "첫 번째 주자 뽑기";
+        document.getElementById('game-desc').textContent = "선물 전달을 시작할 첫 번째 사람을 뽑아주세요.";
+        document.getElementById('result-label').textContent = "첫 번째 주자는?";
+        document.getElementById('result-name').textContent = "";
+        
+        const btn = document.getElementById('action-btn');
+        btn.disabled = false;
+        btn.textContent = "첫번째 사람 뽑기";
+        btn.onclick = drawFirstWithLoading;
+    }
+
+    function startLoadingAnimation(onComplete) {
+        const btn = document.getElementById('action-btn');
+        const resultNameEl = document.getElementById('result-name');
+        btn.disabled = true;
+
+        let duration = 3000; // 3초 로딩
+        let intervalTime = 250; // 문구 변경 간격 (ms)
+        let elapsedTime = 0;
+
+        let timer = setInterval(() => {
+            // 문구를 무작위로 선택
+            const randomMsg = LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)];
+            resultNameEl.innerHTML = `<span class="loading-text">${randomMsg}</span>`;
+            
+            elapsedTime += intervalTime;
+            if (elapsedTime >= duration) {
+                clearInterval(timer);
+                btn.disabled = false;
+                onComplete();
+            }
+        }, intervalTime);
+    }
+
+    function drawFirstWithLoading() {
+        startLoadingAnimation(drawFirst);
+    }
+
+    function drawFirst() {
+        const randomIndex = Math.floor(Math.random() * remainingMembers.length);
+        const selected = remainingMembers.splice(randomIndex, 1)[0];
+        sequence.push(selected);
+
+        renderMembers();
+        document.getElementById('result-name').textContent = selected;
+        
+        const btn = document.getElementById('action-btn');
+        btn.textContent = "다음 선물 받을 사람 뽑기";
+        btn.onclick = prepareNextDraw;
+    }
+
+    function prepareNextDraw() {
+        currentStep++;
+        const giver = sequence[sequence.length - 1];
+        
+        if (remainingMembers.length > 1) {
+            document.getElementById('game-title').textContent = `선물 받을 사람 뽑기 (${sequence.length}/6)`;
+            document.getElementById('game-desc').innerHTML = `<b>${giver}</b> 님이 선물해 줄 다음 사람을 뽑아주세요.`;
+            document.getElementById('result-label').textContent = `${giver} → ?`;
+            document.getElementById('result-name').textContent = "";
+            
+            const btn = document.getElementById('action-btn');
+            btn.disabled = false;
+            btn.textContent = "다음 선물 받을 사람 뽑기";
+            btn.onclick = drawNextWithLoading;
+        } else if (remainingMembers.length === 1) {
+            setupFinalStep();
+        }
+    }
+
+    function drawNextWithLoading() {
+        startLoadingAnimation(drawNext);
+    }
+
+    function drawNext() {
+        const randomIndex = Math.floor(Math.random() * remainingMembers.length);
+        const selected = remainingMembers.splice(randomIndex, 1)[0];
+        sequence.push(selected);
+
+        renderMembers();
+        document.getElementById('result-name').textContent = selected;
+
+        if (remainingMembers.length > 0) {
+            const btn = document.getElementById('action-btn');
+            btn.textContent = "다음 순서로 진행";
+            btn.onclick = prepareNextDraw;
+        } else {
+            setupFinalStep();
+        }
+    }
+
+    function setupFinalStep() {
+        // 마지막 남은 사람 확정
+        const lastMember = remainingMembers.pop();
+        sequence.push(lastMember);
+        renderMembers();
+
+        document.getElementById('game-title').textContent = "최종 결과 발표";
+        document.getElementById('game-desc').innerHTML = `모든 순서가 정해졌습니다!`;
+        document.getElementById('result-label').textContent = "마지막 주자";
+        document.getElementById('result-name').textContent = lastMember;
+
+        // 히스토리 목록 생성
+        const historyContainer = document.getElementById('chain-history');
+        historyContainer.classList.remove('hidden');
+        
+        let historyHTML = '<strong>🎁 선물 전달 순서:</strong><br><br>';
+        for(let i = 0; i < sequence.length - 1; i++) {
+            historyHTML += `<div class="chain-item">🎄 <b>${sequence[i]}</b> ➔ <b>${sequence[i+1]}</b> 에게 선물</div>`;
+        }
+        historyHTML += `<div class="chain-item">🎄 <b>${sequence[sequence.length - 1]}</b> ➔ <b>${sequence[0]}</b> 에게 선물 (첫 번째 주자)</div>`;
+        
+        historyContainer.innerHTML = historyHTML;
+
+        // 버튼 변경
+        const btn = document.getElementById('action-btn');
+        btn.disabled = false;
+        btn.textContent = "처음으로";
+        btn.onclick = initGame;
+    }
+
+    // 초기화 실행
+    initGame();
+</script>
+
+</body>
+</html>
