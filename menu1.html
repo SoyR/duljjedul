@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연말 선물 랜덤뽑기 | Doridul Christmas Party</title>
+    <link rel="icon" href="tree.ico" type="image/x-icon">
+    <meta property="og:title" content="연말 선물 랜덤뽑기 | Doridul Christmas Party">
+    <meta property="og:description" content="선물 뽑기를 시작합니다. 서로의 산타가 되어줄 순서를 정해볼까요?">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://soyr.github.io/doridul/menu1.html">
+    <meta property="og:image" content="https://soyr.github.io/doridul/doridulillust.png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="716">
+    <meta property="og:image:type" content="image/png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="연말 선물 랜덤뽑기 | Doridul Christmas Party">
+    <meta name="twitter:image" content="https://soyr.github.io/doridul/doridulillust.png">
+    <!-- 클래식 폰트 불러오기 (Great Vibes, Playfair Display, Gowun Batang) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+    <div class="corner-decoration top-left">✦</div>
+    <div class="corner-decoration top-right">✦</div>
+    <div class="corner-decoration bottom-left">✦</div>
+    <div class="corner-decoration bottom-right">✦</div>
+
+    <a href="index.html" class="back-link">← 메인으로</a>
+
+    <!-- 1. 메인 화면 -->
+    <div id="step-1">
+        <h1 class="script-title">Doridul</h1>
+        <h2 class="classic-title">Christmas Party</h2>
+        <img src="gift-illust.png" alt="Doridul illustration" class="main-illust">
+        <p class="description">
+            선물 뽑기를 시작합니다.<br>
+            인원수를 선택하고 이름을 입력해주세요.
+        </p>
+
+        <div class="setup-row">
+            <label for="member-count">인원수</label>
+            <select id="member-count" class="select-input" onchange="renderNameInputs(this.value)">
+                <option value="3">3명</option>
+                <option value="4">4명</option>
+                <option value="5">5명</option>
+                <option value="6" selected>6명</option>
+                <option value="7">7명</option>
+                <option value="8">8명</option>
+                <option value="9">9명</option>
+                <option value="10">10명</option>
+            </select>
+        </div>
+
+        <div class="name-inputs" id="name-inputs"></div>
+
+        <p class="setup-error hidden" id="setup-error"></p>
+
+        <button class="btn" onclick="handleSetupStart()">시작</button>
+    </div>
+
+    <!-- 2~7. 진행 화면 (공통 레이아웃 사용) -->
+    <div id="step-game" class="hidden">
+        <h2 class="classic-title" id="game-title">Christmas Party</h2>
+
+        <p class="description" id="game-desc"></p>
+
+        <div class="members-list" id="members-container"></div>
+
+        <div class="result-box">
+            <span id="result-label" style="font-size: 0.95rem;">버튼을 눌러 사람을 뽑아주세요</span>
+            <div id="result-name" class="highlight-name"></div>
+        </div>
+
+        <div id="chain-history" class="chain-history hidden"></div>
+
+        <button class="btn" id="action-btn" onclick="drawFirstWithLoading()">첫번째 사람 뽑기</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

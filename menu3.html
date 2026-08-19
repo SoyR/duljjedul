@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숨바 | Doridul Christmas Party</title>
+    <link rel="icon" href="tree.ico" type="image/x-icon">
+    <meta property="og:title" content="숨바 | Doridul Christmas Party">
+    <meta property="og:description" content="크리스마스를 기념하는 작은 바, 숨바에 놀러오세요.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://soyr.github.io/doridul/menu3.html">
+    <meta property="og:image" content="https://soyr.github.io/doridul/doridulillust.png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="716">
+    <meta property="og:image:type" content="image/png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="숨바 | Doridul Christmas Party">
+    <meta name="twitter:image" content="https://soyr.github.io/doridul/doridulillust.png">
+    <!-- 클래식 폰트 불러오기 (Great Vibes, Playfair Display, Gowun Batang) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+    <div class="corner-decoration top-left">✦</div>
+    <div class="corner-decoration top-right">✦</div>
+    <div class="corner-decoration bottom-left">✦</div>
+    <div class="corner-decoration bottom-right">✦</div>
+
+    <a href="index.html" class="back-link">← 메인으로</a>
+
+    <h2 class="classic-title">Soom Bar</h2>
+
+    <div class="vn-frame" id="vn-frame">
+        <img src="bar_character_1.png" alt="숨바 바텐더" class="vn-character" id="vn-character">
+
+        <div class="vn-dialogue-box" id="vn-dialogue-box">
+            <span class="vn-dialogue-text" id="vn-dialogue-text"></span><span class="vn-continue-arrow hidden" id="vn-continue-arrow">▼</span>
+        </div>
+
+        <div class="vn-choices hidden" id="vn-choices"></div>
+
+        <div class="vn-input-row hidden" id="vn-input-row">
+            <input type="text" id="vn-name-input" class="name-input" maxlength="10" placeholder="이름 (선택)">
+            <button class="btn" id="vn-name-confirm">확인</button>
+        </div>
+
+        <div class="vn-message-row hidden" id="vn-message-row">
+            <div class="vn-message-wrap">
+                <textarea id="vn-message-input" class="message-input" maxlength="100" rows="3" placeholder="자유롭게 남겨주세요"></textarea>
+                <div class="vn-message-counter" id="vn-message-counter">0/100</div>
+            </div>
+            <button class="btn" id="vn-message-confirm">확인</button>
+        </div>
+
+        <div class="vn-playlist hidden" id="vn-playlist">
+            <div class="vn-playlist-title">🎵 My Playlist</div>
+
+            <div class="vn-player-wrap hidden" id="vn-player-wrap">
+                <div class="vn-now-playing" id="vn-now-playing">🎵 재생 중...</div>
+                <iframe id="vn-player" class="vn-player" src="" title="재생 중인 곡 (음원만 재생)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" tabindex="-1" aria-hidden="true"></iframe>
+            </div>
+
+            <ol class="vn-playlist-list" id="vn-playlist-list"></ol>
+        </div>
+    </div>
+
+</div>
+
+<script src="vn.js"></script>
+
+</body>
+</html>
