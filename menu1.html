@@ -21,6 +21,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="menu1.css">
 </head>
 <body>
 
@@ -32,10 +33,59 @@
 
     <a href="index.html" class="back-link">← 메인으로</a>
 
+    <!-- 탭 -->
+    <div class="tab-list" role="tablist">
+        <button class="tab-btn" id="tab-color" role="tab" aria-controls="panel-color" onclick="switchTab('color')">컬러뽑기</button>
+        <button class="tab-btn" id="tab-gift" role="tab" aria-controls="panel-gift" onclick="switchTab('gift')">선물뽑기</button>
+    </div>
+
+    <!-- 컬러뽑기 -->
+    <div id="panel-color" role="tabpanel" aria-labelledby="tab-color">
+        <div class="lotto-turn hidden" id="lotto-turn">
+            <p class="lotto-turn-label" id="lotto-turn-label" aria-live="polite">이번에 뽑을 사람은!</p>
+            <div class="members-list lotto-members" id="lotto-members"></div>
+        </div>
+
+        <div class="lotto-machine">
+            <div class="lotto-globe" id="lotto-globe">
+                <span class="lotto-drum-text" id="lotto-drum-text" aria-hidden="true">두구두구두구</span>
+                <div class="lotto-start-panel" id="lotto-start-panel">
+                    <div class="lotto-start-row">
+                        <select id="lotto-count" class="lotto-count-select" aria-label="인원수" onchange="previewCountBalls()">
+                        <option value="doridul" selected>둘째덜</option>
+                        <option value="2">2명</option>
+                        <option value="3">3명</option>
+                        <option value="4">4명</option>
+                        <option value="5">5명</option>
+                        <option value="6">6명</option>
+                        <option value="7">7명</option>
+                        <option value="8">8명</option>
+                        <option value="9">9명</option>
+                        <option value="10">10명</option>
+                        </select>
+                        <button class="lotto-start-btn" onclick="startLotto()">시작</button>
+                    </div>
+                </div>
+            </div>
+            <div class="lotto-chute"></div>
+        </div>
+
+        <div class="lotto-tray" aria-live="polite">
+            <span id="lotto-label" style="font-size: 0.95rem;">시작 버튼을 눌러주세요</span>
+            <div class="lotto-result" id="lotto-result"></div>
+        </div>
+
+        <button class="btn hidden" id="lotto-btn" onclick="drawColor()">컬러 뽑기</button>
+        <button class="lotto-restart hidden" id="lotto-restart" onclick="restartLotto()">다시하기</button>
+
+        <div class="lotto-history" id="lotto-history"></div>
+    </div>
+
+    <!-- 선물뽑기 -->
+    <div id="panel-gift" role="tabpanel" aria-labelledby="tab-gift" class="hidden">
+
     <!-- 1. 메인 화면 -->
     <div id="step-1">
-        <h1 class="script-title">Doridul</h1>
-        <h2 class="classic-title">Christmas Party</h2>
         <img src="gift-illust.png" alt="Doridul illustration" class="main-illust">
         <p class="description">
             선물 뽑기를 시작합니다.<br>
@@ -45,10 +95,11 @@
         <div class="setup-row">
             <label for="member-count">인원수</label>
             <select id="member-count" class="select-input" onchange="renderNameInputs(this.value)">
+                <option value="doridul" selected>둘째덜</option>
                 <option value="3">3명</option>
                 <option value="4">4명</option>
                 <option value="5">5명</option>
-                <option value="6" selected>6명</option>
+                <option value="6">6명</option>
                 <option value="7">7명</option>
                 <option value="8">8명</option>
                 <option value="9">9명</option>
@@ -71,6 +122,13 @@
 
         <div class="members-list" id="members-container"></div>
 
+        <div class="lotto-machine">
+            <div class="lotto-globe" id="gift-globe">
+                <span class="lotto-drum-text" id="gift-drum-text" aria-hidden="true">두구두구두구</span>
+            </div>
+            <div class="lotto-chute"></div>
+        </div>
+
         <div class="result-box">
             <span id="result-label" style="font-size: 0.95rem;">버튼을 눌러 사람을 뽑아주세요</span>
             <div id="result-name" class="highlight-name"></div>
@@ -81,9 +139,12 @@
         <button class="btn" id="action-btn" onclick="drawFirstWithLoading()">첫번째 사람 뽑기</button>
     </div>
 
+    </div><!-- /panel-gift -->
+
 </div>
 
 <script src="script.js"></script>
+<script src="menu1.js"></script>
 
 </body>
 </html>
