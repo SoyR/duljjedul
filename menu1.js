@@ -467,6 +467,8 @@ switchTab(location.hash === '#gift' ? 'gift' : 'color');
    script.js(공유 파일)는 건드리지 않고, 이름 입력칸 만드는 함수만 menu1에서 감싸서 확장 */
 const baseRenderNameInputs = renderNameInputs;
 renderNameInputs = function (value) {
+    const codeRow = document.getElementById('doridul-code-row');
+    if (codeRow) codeRow.classList.toggle('hidden', value !== 'doridul' || isDoridulUnlocked());
     if (value !== 'doridul') {
         baseRenderNameInputs(value);
         return;
@@ -495,7 +497,10 @@ const GIFT_PHOTOS = {
     '홍비': 'landom/hong_1.png',
     '율린': 'landom/yul_1.png',
 };
-Object.values(GIFT_PHOTOS).forEach(src => { new Image().src = src; }); // 미리 불러오기
+
+// 사진은 둘째덜 코드를 통과했을 때만 사용 (숫자 모드에서 같은 이름을 입력해도 안 나옴)
+let giftPhotosOn = false;
+const photoFor = name => (giftPhotosOn ? GIFT_PHOTOS[name] : undefined);
 
 function fillGiftMachine() {
     createBalls(giftMachine, INITIAL_MEMBERS.map((name, i) => {
@@ -505,7 +510,7 @@ function fillGiftMachine() {
             label: name,
             color: c.color,
             textColor: DARK_TEXT_COLORS.includes(c.color) ? '#5a2a28' : '#fff',
-            image: GIFT_PHOTOS[name],
+            image: photoFor(name),
         };
     }));
 }
@@ -561,7 +566,7 @@ function addChainFaces() {
         }
     });
     document.querySelectorAll('#chain-history .chain-item b').forEach(b => {
-        const photo = GIFT_PHOTOS[b.textContent];
+        const photo = photoFor(b.textContent);
         if (!photo) return;
         const img = document.createElement('img');
         img.className = 'chain-face';
@@ -575,7 +580,7 @@ function addChainFaces() {
 function addResultFace() {
     const el = document.getElementById('result-name');
     const name = el.textContent;
-    const photo = GIFT_PHOTOS[name];
+    const photo = photoFor(name);
     if (!photo) return;
     const img = document.createElement('img');
     img.className = 'result-face';
@@ -609,3 +614,53 @@ if (window.ResizeObserver && giftMachine.globe) {
         if (size > 0) document.documentElement.style.setProperty('--gift-ball-size', `${size.toFixed(1)}px`);
     }).observe(giftMachine.globe);
 }
+
+/* ---------- 선물뽑기: 둘째덜 입장 코드 ----------
+   코드 원문 대신 해시값만 저장 (소스를 봐도 코드가 바로 보이지 않게).
+   한 번 통과하면 이 탭을 닫기 전까지는 다시 묻지 않음 */
+const DORIDUL_CODE_HASH = 'a9ba1ced9c61747edc9f7f144fd0df47ee555bb0be2f9b2f0cfa15eb6e96f1f8';
+
+function isDoridulUnlocked() {
+    try { return sessionStorage.getItem('doridul-unlocked') === '1'; } catch (e) { return false; }
+}
+
+async function checkDoridulCode(code) {
+    const data = new TextEncoder().encode(`doridul:${code}`);
+    const buf = await crypto.subtle.digest('SHA-256', data);
+    const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    return hex === DORIDUL_CODE_HASH;
+}
+
+const baseHandleSetupStart = handleSetupStart;
+handleSetupStart = async function () {
+    const isDoridul = document.getElementById('member-count').value === 'doridul';
+    if (!isDoridul) {
+        giftPhotosOn = false;
+        baseHandleSetupStart();
+        return;
+    }
+
+    if (!isDoridulUnlocked()) {
+        const input = document.getElementById('doridul-code');
+        const errorEl = document.getElementById('setup-error');
+        const ok = input.value.trim() !== '' && await checkDoridulCode(input.value.trim());
+        if (!ok) {
+            errorEl.textContent = input.value.trim() === '' ? '코드를 입력해주세요.' : '코드가 맞지 않아요.';
+            errorEl.classList.remove('hidden');
+            input.value = '';
+            input.focus();
+            return;
+        }
+        try { sessionStorage.setItem('doridul-unlocked', '1'); } catch (e) { /* 저장 안 돼도 이번 판은 진행 */ }
+        input.value = '';
+        document.getElementById('doridul-code-row').classList.add('hidden');
+    }
+
+    giftPhotosOn = true;
+    baseHandleSetupStart();
+};
+
+// 코드 칸에서 엔터로도 시작
+document.getElementById('doridul-code').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleSetupStart();
+});

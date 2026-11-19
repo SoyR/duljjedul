@@ -52,10 +52,10 @@
                 <div class="lotto-start-panel" id="lotto-start-panel">
                     <div class="lotto-start-row">
                         <select id="lotto-count" class="lotto-count-select" aria-label="인원수" onchange="previewCountBalls()">
-                        <option value="doridul" selected>둘째덜</option>
+                        <option value="doridul">둘째덜</option>
                         <option value="2">2명</option>
                         <option value="3">3명</option>
-                        <option value="4">4명</option>
+                        <option value="4" selected>4명</option>
                         <option value="5">5명</option>
                         <option value="6">6명</option>
                         <option value="7">7명</option>
@@ -95,9 +95,9 @@
         <div class="setup-row">
             <label for="member-count">인원수</label>
             <select id="member-count" class="select-input" onchange="renderNameInputs(this.value)">
-                <option value="doridul" selected>둘째덜</option>
+                <option value="doridul">둘째덜</option>
                 <option value="3">3명</option>
-                <option value="4">4명</option>
+                <option value="4" selected>4명</option>
                 <option value="5">5명</option>
                 <option value="6">6명</option>
                 <option value="7">7명</option>
@@ -108,6 +108,11 @@
         </div>
 
         <div class="name-inputs" id="name-inputs"></div>
+
+        <div class="setup-row doridul-code-row hidden" id="doridul-code-row">
+            <label for="doridul-code">코드</label>
+            <input type="password" id="doridul-code" class="name-input doridul-code-input" inputmode="numeric" pattern="[0-9]*" maxlength="12" autocomplete="off" placeholder="숫자 코드 입력">
+        </div>
 
         <p class="setup-error hidden" id="setup-error"></p>
 

@@ -556,3 +556,18 @@
 @media (prefers-reduced-motion: reduce) {
     .chain-face { animation: none; }
 }
+
+/* 선물뽑기 둘째덜 입장 코드 */
+.doridul-code-input {
+    flex: 0 1 180px;
+    text-align: center;
+    letter-spacing: 3px;
+}
+
+.doridul-code-row.hidden {
+    display: none;
+}
+
+.doridul-code-input::placeholder {
+    letter-spacing: 0;
+}
