@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보드게임 | Doridul Christmas Party</title>
+    <link rel="icon" href="tree.ico" type="image/x-icon">
+    <meta property="og:title" content="보드게임 | Doridul Christmas Party">
+    <meta property="og:description" content="홍팀과 백팀으로 나뉘어 주사위를 굴리고 한 바퀴를 돌아보세요.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://soyr.github.io/doridul/duljjemarble.html">
+    <meta property="og:image" content="https://soyr.github.io/doridul/doridulillust.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="duljjemarble.css">
+</head>
+<body>
+
+<div class="card marble-card">
+    <div class="corner-decoration top-left">✦</div>
+    <div class="corner-decoration top-right">✦</div>
+    <div class="corner-decoration bottom-left">✦</div>
+    <div class="corner-decoration bottom-right">✦</div>
+
+    <a href="index.html" class="back-link">← 메인으로</a>
+
+
+    <div class="scorebar">
+        <div class="side-score red">
+            <span class="side-label">홍팀</span>
+            <span class="side-points" id="score-red">0</span>
+            <div class="side-faces" id="faces-red"></div>
+        </div>
+        <span class="vs">vs</span>
+        <div class="side-score white">
+            <span class="side-label">백팀</span>
+            <span class="side-points" id="score-white">0</span>
+            <div class="side-faces" id="faces-white"></div>
+        </div>
+    </div>
+
+    <div class="board" id="board">
+        <div class="track"></div>
+
+        <div class="center">
+            <div class="turn-box">
+                <div class="turn-face" id="turn-face">?</div>
+                <div class="turn-name" id="turn-name"></div>
+            </div>
+
+            <div class="dice-stage">
+                <div class="dice-bounce" id="dice-bounce">
+                    <div class="dice-tilt">
+                        <div class="cube" id="dice"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="dice-result" id="dice-result"></div>
+
+            <button class="btn primary" id="pick-btn" disabled>순서뽑기</button>
+            <button class="btn primary hidden" id="roll-btn">주사위 굴리기</button>
+        </div>
+    </div>
+
+    <p class="status" id="status"></p>
+
+    <div class="players" id="players"></div>
+
+    <button class="btn reset-btn" id="reset-btn">처음부터 다시</button>
+</div>
+
+<div class="modal-overlay hidden" id="modal">
+    <div class="modal-card" id="modal-card"></div>
+</div>
+
+<script src="duljjemarble.js"></script>
+
+</body>
+</html>
